@@ -1,0 +1,74 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="mateuscoradini" id="1691158231174-11">
+        <createTable tableName="address">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="addressPK"/>
+            </column>
+            <column name="cep" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="person_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP(6) WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP(6) WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="complement" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unit" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="neighborhood" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locality" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state_code" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ibge" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gia" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ddd" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="siafi" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mateuscoradini" id="1691158233874-12">
+        <addUniqueConstraint columnNames="cep" constraintName="uk_cep" tableName="address"/>
+    </changeSet>
+
+    <changeSet author="mateuscoradini" id="1691158233874-13">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="address"
+                                 constraintName="fk_address_person" referencedColumnNames="id"
+                                 referencedTableName="person" validate="true"/>
+    </changeSet>
+
+    <changeSet author="mateuscoradini" id="1691158233874-14">
+        <createIndex indexName="idx_cep" tableName="address">
+            <column name="cep"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
